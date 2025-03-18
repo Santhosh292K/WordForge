@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elemental Jungle Keyboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0a1e0a;
+            font-family: 'Arial', sans-serif;
+            color: #a9e8a9;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .jungle-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #071c07, #0d2c0d, #071c07);
+            overflow: hidden;
+        }
+
+        /* Background jungle elements */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            pointer-events: none;
+        }
+
+        /* Far background trees */
+        .bg-trees {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500"><path d="M0,500 L1000,500 L1000,300 C950,320 900,280 850,300 C800,320 750,280 700,300 C650,320 600,280 550,300 C500,320 450,280 400,300 C350,320 300,280 250,300 C200,320 150,280 100,300 C50,320 0,300 0,300 Z" fill="%23143914"/><path d="M50,300 L50,200 L80,300 L80,150 L110,300 M200,300 L200,180 L230,300 L230,220 L260,300 M350,300 L350,190 L380,300 L380,160 L410,300 M500,300 L500,200 L530,300 L530,150 L560,300 M650,300 L650,170 L680,300 L680,220 L710,300 M800,300 L800,180 L830,300 L830,230 L860,300 M950,300 L950,200 L980,300" stroke="%23143914" stroke-width="10" fill="none"/></svg>');
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        /* Mid-level plants */
+        .plant {
+            position: absolute;
+            width: 150px;
+            height: 200px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            z-index: 2;
+            transition: transform 1s ease-in-out;
+        }
+
+        .plant1 {
+            left: 5%;
+            bottom: 10%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,100 C50,100 30,80 40,60 C50,40 30,30 20,40 C10,50 30,60 40,50" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,150 C50,150 70,130 60,110 C50,90 70,80 80,90 C90,100 70,110 60,100" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,120 C50,120 30,100 35,80 C40,60 20,60 15,70 C10,80 30,90 25,75" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="20" cy="40" rx="15" ry="10" fill="%2329b829" transform="rotate(-20,20,40)"/><ellipse cx="40" cy="50" rx="15" ry="10" fill="%2329b829" transform="rotate(10,40,50)"/><ellipse cx="80" cy="90" rx="15" ry="10" fill="%2329b829" transform="rotate(-15,80,90)"/><ellipse cx="60" cy="100" rx="15" ry="10" fill="%2329b829" transform="rotate(25,60,100)"/><ellipse cx="15" cy="70" rx="15" ry="10" fill="%2329b829" transform="rotate(-10,15,70)"/><ellipse cx="25" cy="75" rx="15" ry="10" fill="%2329b829" transform="rotate(20,25,75)"/></svg>');
+        }
+
+        .plant2 {
+            right: 8%;
+            bottom: 5%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,80 C40,70 20,80 30,50 C40,20 60,30 50,50 C40,70 60,60 70,40 C80,20 90,40 70,50" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="30" cy="50" rx="20" ry="12" fill="%2329b829" transform="rotate(-20,30,50)"/><ellipse cx="50" cy="50" rx="18" ry="10" fill="%2329b829" transform="rotate(15,50,50)"/><ellipse cx="70" cy="40" rx="22" ry="13" fill="%2329b829" transform="rotate(-10,70,40)"/><ellipse cx="70" cy="50" rx="15" ry="8" fill="%2329b829" transform="rotate(25,70,50)"/><circle cx="60" cy="35" r="5" fill="%23ff5555"/><circle cx="40" cy="45" r="4" fill="%23ff5555"/><circle cx="75" cy="55" r="4" fill="%23ff5555"/></svg>');
+        }
+
+        .plant3 {
+            left: 25%;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,120 C40,110 20,120 10,100 C0,80 20,70 30,85 C40,100 50,80 60,90 C70,100 80,80 90,90" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,160 C60,150 80,160 75,140 C70,120 90,115 85,130" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="10" cy="100" rx="15" ry="10" fill="%2329b829" transform="rotate(-15,10,100)"/><ellipse cx="30" cy="85" rx="15" ry="10" fill="%2329b829" transform="rotate(10,30,85)"/><ellipse cx="60" cy="90" rx="15" ry="10" fill="%2329b829" transform="rotate(-10,60,90)"/><ellipse cx="90" cy="90" rx="15" ry="10" fill="%2329b829" transform="rotate(20,90,90)"/><ellipse cx="75" cy="140" rx="15" ry="10" fill="%2329b829" transform="rotate(-5,75,140)"/><ellipse cx="85" cy="130" rx="15" ry="10" fill="%2329b829" transform="rotate(15,85,130)"/><circle cx="15" cy="95" r="3" fill="%23ffff00"/><circle cx="85" cy="95" r="3" fill="%23ffff00"/><circle cx="72" cy="138" r="3" fill="%23ffff00"/></svg>');
+        }
+
+        .plant4 {
+            right: 30%;
+            bottom: 2%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,100 C60,90 80,100 70,70 C60,40 40,60 50,70 C60,80 40,70 30,50 C20,30 10,50 30,60" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,140 C40,130 20,140 25,120 C30,100 10,105 15,120" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="70" cy="70" rx="18" ry="12" fill="%2329b829" transform="rotate(-10,70,70)"/><ellipse cx="50" cy="70" rx="16" ry="10" fill="%2329b829" transform="rotate(15,50,70)"/><ellipse cx="30" cy="50" rx="20" ry="13" fill="%2329b829" transform="rotate(-20,30,50)"/><ellipse cx="30" cy="60" rx="14" ry="9" fill="%2329b829" transform="rotate(10,30,60)"/><ellipse cx="25" cy="120" rx="15" ry="10" fill="%2329b829" transform="rotate(-15,25,120)"/><ellipse cx="15" cy="120" rx="12" ry="8" fill="%2329b829" transform="rotate(25,15,120)"/><circle cx="75" cy="75" r="4" fill="%23ff00ff"/><circle cx="35" cy="55" r="4" fill="%23ff00ff"/><circle cx="20" cy="115" r="4" fill="%23ff00ff"/></svg>');
+        }
+
+        /* Foreground vines */
+        .vines {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .vine1 {
+            position: absolute;
+            left: 10%;
+            top: 0;
+            width: 20px;
+            height: 60%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 300"><path d="M10,0 Q15,30 5,50 Q0,70 10,100 Q15,130 5,150 Q0,170 10,200 Q15,230 5,250 Q0,270 10,300" stroke="%23339933" stroke-width="3" fill="none"/><path d="M10,50 L30,60" stroke="%23339933" stroke-width="2" fill="none"/><path d="M5,100 L-15,110" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,150 L30,160" stroke="%23339933" stroke-width="2" fill="none"/><path d="M5,200 L-15,210" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,250 L30,260" stroke="%23339933" stroke-width="2" fill="none"/><ellipse cx="30" cy="60" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,30,60)"/><ellipse cx="-15" cy="110" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-15,110)"/><ellipse cx="30" cy="160" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,30,160)"/><ellipse cx="-15" cy="210" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-15,210)"/><ellipse cx="30" cy="260" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,30,260)"/></svg>');
+        }
+
+        .vine2 {
+            position: absolute;
+            right: 15%;
+            top: 0;
+            width: 20px;
+            height: 70%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 350"><path d="M10,0 Q5,40 15,70 Q20,100 10,130 Q5,160 15,190 Q20,220 10,250 Q5,280 15,310 Q20,330 10,350" stroke="%23339933" stroke-width="3" fill="none"/><path d="M15,70 L35,80" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,130 L-10,140" stroke="%23339933" stroke-width="2" fill="none"/><path d="M15,190 L35,200" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,250 L-10,260" stroke="%23339933" stroke-width="2" fill="none"/><path d="M15,310 L35,320" stroke="%23339933" stroke-width="2" fill="none"/><ellipse cx="35" cy="80" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,35,80)"/><ellipse cx="-10" cy="140" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-10,140)"/><ellipse cx="35" cy="200" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,35,200)"/><ellipse cx="-10" cy="260" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-10,260)"/><ellipse cx="35" cy="320" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,35,320)"/></svg>');
+        }
+
+        /* Word display area */
+        .word-display {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            z-index: 100;
+            letter-spacing: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Letter bubble styling */
+        .letter-bubble {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+            background: radial-gradient(circle at 30% 30%, rgba(145, 188, 150, 0.8), rgba(255, 255, 255, 0.1));
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        /* Particles for letter bubbles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        /* Fire effect - realistic with multiple colors and flickering */
+        .fire-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, #ff4500, #ff8c00, #ffff00);
+            opacity: 0.05;
+            transform: translateY(100%);
+            animation: fire-wipe 2s ease-out forwards;
+        }
+
+        @keyframes fire-wipe {
+            0% {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                /* Keep fire visible instead of fading out */
+                transform: translateY(0);
+            }
+        }
+
+
+        /* Water effect */
+        .water-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .water-wave {
+            position: absolute;
+            height: 150%;
+            width: 300%;
+            left: -100%;
+            background: radial-gradient(ellipse at center, rgba(0, 150, 255, 0.7) 0%, rgba(0, 100, 200, 0.5) 40%, rgba(0, 50, 150, 0.3) 70%, rgba(0, 25, 100, 0.1) 100%);
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(100%) rotate(-3deg);
+            animation: water-wave 3s ease-in-out forwards;
+        }
+
+        @keyframes water-wave {
+            0% {
+                opacity: 0;
+                transform: translateY(100%) rotate(-3deg);
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100%) rotate(3deg);
+            }
+        }
+
+        /* Air effect */
+        .air-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .air-line {
+            position: absolute;
+            height: 5px;
+            width: 120%;
+            left: -10%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+            filter: blur(2px);
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        /* Earth effect */
+        .earth-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .rock {
+            position: absolute;
+            background: radial-gradient(ellipse at center, #8b5a2b 0%, #654321 40%, #3b2506 100%);
+            box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.3), inset -2px -2px 5px rgba(0, 0, 0, 0.5);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            transform: translateY(-100vh) rotate(0deg);
+            opacity: 0;
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            text-align: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jungle-container">
+        <!-- Background elements -->
+        <div class="background bg-trees"></div>
+
+        <!-- Mid-level plants -->
+        <div class="plant plant1"></div>
+        <div class="plant plant2"></div>
+        <div class="plant plant3"></div>
+        <div class="plant plant4"></div>
+
+        <!-- Foreground vines -->
+        <div class="vines">
+            <div class="vine1"></div>
+            <div class="vine2"></div>
+        </div>
+
+        <!-- Word display area -->
+        <div class="word-display"></div>
+
+        <!-- Effect containers -->
+        <div class="fire-container"></div>
+        <div class="water-container"></div>
+        <div class="air-container"></div>
+        <div class="earth-container"></div>
+
+        <!-- Instructions -->
+        <div class="instruction">Type the words: Fire, Water, Air, or Earth</div>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.querySelector('.jungle-container');
+    const wordDisplay = document.querySelector('.word-display');
+    const plants = document.querySelectorAll('.plant');
+    const elementWords = ['FIRE', 'WATER', 'AIR', 'EARTH'];
+    let typedLetters = [];
+    let letterCount = 0;
+
+    // Add key event listener
+    document.addEventListener('keydown', function (event) {
+        // Only capture letter keys
+        if (/^[a-zA-Z]$/.test(event.key)) {
+            const letter = event.key.toUpperCase();
+            createLetterBubble(letter);
+            typedLetters.push(letter);
+            letterCount++;
+
+            // Update word display
+            updateWordDisplay();
+
+            // Check if any of the element words have been typed
+            for (let word of elementWords) {
+                if (typedLetters.length >= word.length) {
+                    const lastTyped = typedLetters.slice(-word.length).join('');
+                    if (lastTyped === word) {
+                        wordDisplay.textContent = word;
+                        wordDisplay.style.opacity = 1;
+
+                        setTimeout(() => {
+                            triggerElementEffect(word);
+                            typedLetters = [];
+                            letterCount = 0;
+                            updateWordDisplay();
+                        }, 500);
+                        break;
+                    }
+                }
+            }
+            
+            // Send to Flask every 10 letters
+            if (letterCount >= 10) {
+                sendLettersToFlask();
+                letterCount = 0; // Reset counter after sending
+            }
+        }
+    });
+
+    function updateWordDisplay() {
+        // Show last 10 typed letters
+        const displayLetters = typedLetters.slice(-10).join('');
+        wordDisplay.textContent = displayLetters;
+        wordDisplay.style.opacity = displayLetters.length > 0 ? 1 : 0;
+    }
+
+    function sendLettersToFlask() {
+        fetch('/receive_letters', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ letters: typedLetters })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Flask received:", data); // Debugging log
+        })
+        .catch(error => console.error("Error sending data to Flask:", error));
+    }
+
+    function createLetterBubble(letter) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('letter-bubble');
+        bubble.textContent = letter;
+
+        // Random position in bottom section
+        const size = Math.floor(Math.random() * 30) + 40;
+        const x = Math.random() * (window.innerWidth - size);
+        const y = bottomSection + Math.random() * (window.innerHeight - bottomSection - size);
+
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${x}px`;
+        bubble.style.top = `${y}px`;
+
+        // Add bubble entrance animation
+        bubble.style.transform = 'scale(0)';
+        bubble.style.opacity = '0';
+        bubble.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+
+        container.appendChild(bubble);
+
+        // Create particles around the bubble
+        createBubbleParticles(x + size / 2, y + size / 2, size);
+
+        // Trigger animation after a small delay
+        setTimeout(() => {
+            bubble.style.transform = 'scale(1)';
+            bubble.style.opacity = '1';
+        }, 10);
+
+        // Start floating upward with delays
+        setTimeout(() => {
+            bubble.style.transition = 'all 3s ease-in-out';
+            const randomX = x + (Math.random() * 100 - 50);
+            const randomY = y - (100 + Math.random() * 100);
+            bubble.style.left = `${randomX}px`;
+            bubble.style.top = `${randomY}px`;
+            bubble.style.opacity = '0.7';
+        }, 300);
+
+        // Remove bubble after animation
+        setTimeout(() => {
+            if (bubble.parentNode) {
+                bubble.parentNode.removeChild(bubble);
+            }
+        }, 3500);
+    }
+
+    // Define the bottomSection variable that was missing
+    const bottomSection = window.innerHeight * 0.6;
+
+    // Include all your other functions
+    function createBubbleParticles(x, y, size) {
+        const particleCount = 8;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            // Position at bubble center
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+
+            // Set random size
+            const particleSize = Math.random() * 4 + 2;
+            particle.style.width = `${particleSize}px`;
+            particle.style.height = `${particleSize}px`;
+
+            // Add to container
+            container.appendChild(particle);
+
+            // Animate outward
+            const angle = (i / particleCount) * Math.PI * 2;
+            const distance = size / 2 + Math.random() * 20;
+            const duration = 0.5 + Math.random() * 0.5;
+
+            particle.style.transition = `all ${duration}s ease-out`;
+
+            setTimeout(() => {
+                const targetX = x + Math.cos(angle) * distance;
+                const targetY = y + Math.sin(angle) * distance;
+                particle.style.left = `${targetX}px`;
+                particle.style.top = `${targetY}px`;
+                particle.style.opacity = '0';
+            }, 10);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, duration * 1000 + 100);
+        }
+    }
+
+    function triggerElementEffect(element) {
+        // Remove all letter bubbles
+        const bubbles = document.querySelectorAll('.letter-bubble');
+        bubbles.forEach(bubble => {
+            bubble.style.transition = 'all 0.5s ease-out';
+            bubble.style.transform = 'scale(0)';
+            bubble.style.opacity = '0';
+
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+            }, 500);
+        });
+
+        // Clear word display
+        setTimeout(() => {
+            wordDisplay.style.opacity = 0;
+        }, 1000);
+
+        switch (element) {
+            case 'FIRE':
+                createFireEffect();
+                animatePlants('fire');
+                break;
+
+            case 'WATER':
+                createWaterEffect();
+                animatePlants('water');
+                break;
+
+            case 'AIR':
+                createAirEffect();
+                animatePlants('air');
+                break;
+
+            case 'EARTH':
+                createEarthEffect();
+                animatePlants('earth');
+                break;
+        }
+    }
+
+    // Include all your element effect functions here
+    function createFireEffect() {
+        const fireContainer = document.querySelector('.fire-container');
+        fireContainer.innerHTML = ''; // Clear previous fire effect
+
+        // Create fire effect div
+        const fireEffect = document.createElement('div');
+        fireEffect.classList.add('fire-effect');
+
+        fireContainer.appendChild(fireEffect);
+
+        // Remove fire after animation completes
+        setTimeout(() => {
+            fireEffect.remove();
+        }, 2000); // Match the duration of the animation
+    }
+
+    function createWaterEffect() {
+        // Your existing water effect code
+        const waterContainer = document.querySelector('.water-container');
+        waterContainer.innerHTML = '';
+
+        // Create 3 waves with different timings
+        for (let i = 0; i < 3; i++) {
+            const wave = document.createElement('div');
+            wave.classList.add('water-wave');
+
+            // Set different positions and delays
+            wave.style.top = `${20 + i * 15}%`;
+            wave.style.animationDelay = `${i * 0.3}s`;
+
+            waterContainer.appendChild(wave);
+
+            // Remove wave after animation
+            setTimeout(() => {
+                if (wave.parentNode) {
+                    wave.parentNode.removeChild(wave);
+                }
+            }, 3000 + i * 300);
+        }
+
+        // Create water droplets
+        for (let i = 0; i < 60; i++) {
+            setTimeout(() => {
+                const droplet = document.createElement('div');
+                droplet.style.position = 'absolute';
+                droplet.style.width = `${Math.random() * 8 + 4}px`;
+                droplet.style.height = `${Math.random() * 12 + 8}px`;
+                droplet.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
+                droplet.style.background = 'radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(150,200,255,0.6) 60%, rgba(100,150,255,0.4) 100%)';
+                droplet.style.filter = 'blur(1px)';
+
+                // Random position
+                droplet.style.left = `${Math.random() * 100}%`;
+                droplet.style.top = `${Math.random() * 100}%`;
+
+                // Animation
+                const duration = 1 + Math.random();
+                droplet.style.transition = `all ${duration}s ease-in-out`;
+                droplet.style.opacity = '0';
+                droplet.style.transform = 'scale(0)';
+
+                waterContainer.appendChild(droplet);
+
+                // Start animation
+                setTimeout(() => {
+                    droplet.style.opacity = '1';
+                    droplet.style.transform = 'scale(1)';
+                }, 10);
+
+                // Fade out
+                setTimeout(() => {
+                    droplet.style.opacity = '0';
+                }, duration * 500);
+
+                // Remove droplet
+                setTimeout(() => {
+                    if (droplet.parentNode) {
+                        droplet.parentNode.removeChild(droplet);
+                    }
+                }, duration * 1000);
+            }, i * 50);
+        }
+    }
+
+    function createAirEffect() {
+        // Your existing air effect code
+        const airContainer = document.querySelector('.air-container');
+        airContainer.innerHTML = '';
+
+        // Create multiple air lines with different delays and positions
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                const line = document.createElement('div');
+                line.classList.add('air-line');
+
+                // Random position and properties
+                line.style.top = `${Math.random() * 100}%`;
+                line.style.height = `${Math.random() * 5 + 2}px`;
+                line.style.opacity = '0';
+
+                // Animation
+                const duration = 1 + Math.random() * 0.5;
+                line.style.transition = `all ${duration}s ease-out`;
+
+                airContainer.appendChild(line);
+
+                // Start animation
+                setTimeout(() => {
+                    line.style.opacity = '0.8';
+                    line.style.transform = 'translateX(100%)';
+                }, 10);
+
+                // Remove line after animation
+                setTimeout(() => {
+                    if (line.parentNode) {
+                        line.parentNode.removeChild(line);
+                    }
+                }, duration * 1000 + 100);
+            }, i * 150);
+        }
+
+        // Create air particles
+        for (let i = 0; i < 80; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = `${Math.random() * 4 + 2}px`;
+                particle.style.height = `${Math.random() * 4 + 2}px`;
+                particle.style.borderRadius = '50%';
+                particle.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                particle.style.filter = 'blur(1px)';
+
+                // Random position on left side
+                particle.style.left = `-10px`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                // Animation
+                const speed = 1 + Math.random() * 2;
+                particle.style.transition = `all ${speed}s linear`;
+
+                airContainer.appendChild(particle);
+
+                // Start animation
+                setTimeout(() => {
+                    particle.style.left = `110%`;
+                    // Random vertical movement
+                    particle.style.top = `${parseFloat(particle.style.top) + (Math.random() * 20 - 10)}%`;
+                }, 10);
+
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, speed * 1000 + 100);
+            }, i * 30);
+        }
+
+        // Clear air container after effect
+        setTimeout(() => {
+            airContainer.innerHTML = '';
+        }, 5000);
+    }
+
+    function createEarthEffect() {
+        // Your existing earth effect code
+        const earthContainer = document.querySelector('.earth-container');
+        earthContainer.innerHTML = '';
+
+        // Create dust cloud at bottom
+        const dustCloud = document.createElement('div');
+        dustCloud.style.position = 'absolute';
+        dustCloud.style.bottom = '0';
+        dustCloud.style.left = '0';
+        dustCloud.style.width = '100%';
+        dustCloud.style.height = '20%';
+        dustCloud.style.background = 'radial-gradient(ellipse at center, rgba(139, 69, 19, 0.5) 0%, rgba(139, 69, 19, 0.3) 50%, rgba(139, 69, 19, 0) 100%)';
+        dustCloud.style.filter = 'blur(5px)';
+        dustCloud.style.opacity = '0';
+        dustCloud.style.transition = 'opacity 2s ease-in-out';
+
+        earthContainer.appendChild(dustCloud);
+
+        setTimeout(() => {
+            dustCloud.style.opacity = '1';
+
+            setTimeout(() => {
+                dustCloud.style.opacity = '0';
+            }, 1500);
+        }, 500);
+
+        // Create rocks falling
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const rock = document.createElement('div');
+                rock.classList.add('rock');
+
+                // Random properties
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const duration = 1 + Math.random() * 1.5;
+                const rotationStart = Math.random() * 360;
+                const rotationEnd = rotationStart + (Math.random() * 720 - 360);
+
+                rock.style.width = `${size}px`;
+                rock.style.height = `${size * 0.8}px`;
+                rock.style.left = `${left}%`;
+
+                // Set animation
+                rock.style.transition = `transform ${duration}s cubic-bezier(0.5, 0, 1, 0.5), opacity ${duration}s ease-in`;
+
+                earthContainer.appendChild(rock);
+
+                // Start animation after a small delay
+                setTimeout(() => {
+                    rock.style.opacity = '1';
+                    rock.style.transform = `translateY(120vh) rotate(${rotationEnd}deg)`;
+                }, 50);
+
+                // Add impact effect when rock hits bottom
+                setTimeout(() => {
+                    createImpactEffect(left, size);
+                }, duration * 1000);
+
+                // Remove rock after animation
+                setTimeout(() => {
+                    if (rock.parentNode) {
+                        rock.parentNode.removeChild(rock);
+                    }
+                }, duration * 1000 + 200);
+            }, i * 100);
+        }
+
+        // Clear earth container after effect
+        setTimeout(() => {
+            earthContainer.innerHTML = '';
+        }, 6000);
+    }
+
+    function createImpactEffect(x, size) {
+        const impactCircle = document.createElement('div');
+        impactCircle.style.position = 'absolute';
+        impactCircle.style.bottom = '0';
+        impactCircle.style.left = `${x}%`;
+        impactCircle.style.width = '10px';
+        impactCircle.style.height = '10px';
+        impactCircle.style.borderRadius = '50%';
+        impactCircle.style.backgroundColor = 'rgba(139, 69, 19, 0.7)';
+        impactCircle.style.filter = 'blur(2px)';
+        impactCircle.style.transform = 'translate(-50%, 0)';
+        impactCircle.style.transition = 'all 0.5s ease-out';
+
+        document.querySelector('.earth-container').appendChild(impactCircle);
+
+        // Expand impact circle
+        setTimeout(() => {
+            impactCircle.style.width = `${size * 2}px`;
+            impactCircle.style.height = `${size * 2}px`;
+            impactCircle.style.opacity = '0';
+        }, 10);
+
+        // Remove impact circle
+        setTimeout(() => {
+            if (impactCircle.parentNode) {
+                impactCircle.parentNode.removeChild(impactCircle);
+            }
+        }, 510);
+
+        // Create dust particles
+        for (let i = 0; i < 10; i++) {
+            const dust = document.createElement('div');
+            dust.style.position = 'absolute';
+            dust.style.bottom = '5px';
+            dust.style.left = `${x}%`;
+            dust.style.width = `${Math.random() * 6 + 4}px`;
+            dust.style.height = `${Math.random() * 6 + 4}px`;
+            dust.style.borderRadius = '50%';
+            dust.style.backgroundColor = 'rgba(139, 69, 19, 0.5)';
+            dust.style.filter = 'blur(1px)';
+            dust.style.transform = 'translate(-50%, 0)';
+            dust.style.transition = 'all 0.8s ease-out';
+
+            document.querySelector('.earth-container').appendChild(dust);
+
+            // Animate dust particle
+            const angle = Math.random() * Math.PI;
+            const distance = Math.random() * 50 + 20;
+
+            setTimeout(() => {
+                dust.style.bottom = `${5 + Math.sin(angle) * distance}px`;
+                dust.style.left = `calc(${x}% + ${Math.cos(angle) * distance}px)`;
+                dust.style.opacity = '0';
+            }, 10);
+
+            // Remove dust particle
+            setTimeout(() => {
+                if (dust.parentNode) {
+                    dust.parentNode.removeChild(dust);
+                }
+            }, 810);
+        }
+    }
+
+    function animatePlants(elementType) {
+        plants.forEach((plant, index) => {
+            switch (elementType) {
+                case 'fire':
+                    const fire = document.createElement('div');
+                    fire.classList.add('fire-effect');
+                    container.appendChild(fire);
+
+                    setTimeout(() => {
+                        fire.remove();
+                    }, 2000);
+                    break;
+                case 'water':
+                    // Plants sway in water
+                    plant.style.transform = `translateY(5px) rotate(${(index % 2 === 0) ? -5 : 5}deg)`;
+                    break;
+                case 'air':
+                    // Plants bend in wind direction
+                    plant.style.transform = `skewX(-15deg) rotate(${(index % 2 === 0) ? -8 : -2}deg)`;
+                    break;
+                case 'earth':
+                    // Plants shake from impact
+                    plant.style.transform = `translateY(${Math.sin(index) * 5}px)`;
+
+                    // Add shake animation
+                    plant.style.animation = 'shake 0.5s ease-in-out';
+                    plant.style.animationIterationCount = '3';
+
+                    // Define shake animation
+                    if (!document.querySelector('#shakeAnimation')) {
+                        const style = document.createElement('style');
+                        style.id = 'shakeAnimation';
+                        style.textContent = `
+                            @keyframes shake {
+                                0%, 100% { transform: translateX(0); }
+                                20% { transform: translateX(-5px); }
+                                40% { transform: translateX(5px); }
+                                60% { transform: translateX(-3px); }
+                                80% { transform: translateX(3px); }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                    break;
+            }
+
+            // Reset plant animation/position after effect
+            setTimeout(() => {
+                plant.style.transform = '';
+                plant.style.animation = '';
+            }, 3000);
+        });
+    }
+
+    // Define flicker animation for fire particles
+    const flickerStyle = document.createElement('style');
+    flickerStyle.textContent = `
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        @keyframes bubble-pop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(flickerStyle);
+});
+    </script>
+</body>
+
+</html>
