@@ -6,7 +6,6 @@
 ## Deployment Link https://santhosh-037as.github.io/iete/templates/
 ## ⚙️ Setup Instructions  
 
-### 1️⃣ **Clone the Repository**  (In case backend is functional)
 ```sh
 git clone https://github.com/Santhosh-037as/iete
 cd iete
