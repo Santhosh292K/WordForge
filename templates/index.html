@@ -1,902 +1,1116 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elemental Jungle Keyboard</title>
+    <title>Immersive Jungle Experience</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #0a1e0a;
-            font-family: 'Arial', sans-serif;
-            color: #a9e8a9;
+            background: linear-gradient(to bottom, #052505, #0a4a1f, #184325);
             height: 100vh;
-            width: 100vw;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            color: #e9ffdb;
         }
-
-        .jungle-container {
+        
+        jungle-container {
             position: relative;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, #071c07, #0d2c0d, #071c07);
             overflow: hidden;
         }
-
-        /* Background jungle elements */
-        .background {
+        
+        .content {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            background-color: rgba(0, 66, 37, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 80%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(107, 170, 107, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
-
-        /* Far background trees */
-        .bg-trees {
+        
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        
+        /* Background layers */
+        .sky-layer {
             position: absolute;
-            bottom: 0;
             width: 100%;
             height: 70%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500"><path d="M0,500 L1000,500 L1000,300 C950,320 900,280 850,300 C800,320 750,280 700,300 C650,320 600,280 550,300 C500,320 450,280 400,300 C350,320 300,280 250,300 C200,320 150,280 100,300 C50,320 0,300 0,300 Z" fill="%23143914"/><path d="M50,300 L50,200 L80,300 L80,150 L110,300 M200,300 L200,180 L230,300 L230,220 L260,300 M350,300 L350,190 L380,300 L380,160 L410,300 M500,300 L500,200 L530,300 L530,150 L560,300 M650,300 L650,170 L680,300 L680,220 L710,300 M800,300 L800,180 L830,300 L830,230 L860,300 M950,300 L950,200 L980,300" stroke="%23143914" stroke-width="10" fill="none"/></svg>');
-            opacity: 0.8;
+            top: 0;
+            background: linear-gradient(to bottom, #052505, #064414);
+            z-index: 0;
+        }
+        
+        .mountains {
+            position: absolute;
+            width: 100%;
+            height: 35%;
+            bottom: 30%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'%3E%3Cpath d='M0 300 L0 150 Q 50 50, 100 100 Q 150 150, 200 120 Q 250 90, 300 150 Q 350 200, 400 180 Q 450 160, 500 200 Q 550 240, 600 220 Q 650 200, 700 230 Q 750 260, 800 250 Q 850 240, 900 200 Q 950 160, 1000 180 Q 1050 200, 1100 150 Q 1150 100, 1200 130 L 1200 300 Z' fill='%23084012'/%3E%3C/svg%3E");
+            background-size: cover;
             z-index: 1;
         }
-
-        /* Mid-level plants */
-        .plant {
+        
+        .foreground {
             position: absolute;
-            width: 150px;
-            height: 200px;
+            width: 100%;
+            height: 30%;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'%3E%3Cpath d='M0 300 L0 100 Q 50 150, 100 120 Q 150 90, 200 120 Q 250 150, 300 100 Q 350 50, 400 80 Q 450 110, 500 80 Q 550 50, 600 70 Q 650 90, 700 60 Q 750 30, 800 50 Q 850 70, 900 40 Q 950 10, 1000 30 Q 1050 50, 1100 20 Q 1150 -10, 1200 20 L 1200 300 Z' fill='%230d5524'/%3E%3C/svg%3E");
+            background-size: cover;
+            z-index: 2;
+        }
+        
+        .tree {
+            position: absolute;
+            z-index: 3;
+            bottom: 0;
+        }
+        
+        .tree1 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Crect x='45' y='80' width='10' height='120' fill='%23654321'/%3E%3Cellipse cx='50' cy='80' rx='30' ry='50' fill='%23228B22'/%3E%3Cellipse cx='50' cy='50' rx='25' ry='40' fill='%23097a36'/%3E%3Cellipse cx='50' cy='30' rx='20' ry='30' fill='%232d8639'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        
+        .tree2 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Crect x='45' y='100' width='10' height='100' fill='%237e3817'/%3E%3Cpath d='M25 100 L75 100 L50 30 Z' fill='%2333a843'/%3E%3Cpath d='M30 130 L70 130 L50 70 Z' fill='%232d8639'/%3E%3Cpath d='M35 160 L65 160 L50 110 Z' fill='%23097a36'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        
+        .tree3 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 200'%3E%3Cpath d='M55 80 C50 120, 50 150, 50 200 L70 200 C70 150, 70 120, 65 80 C80 70, 90 60, 100 40 C80 45, 70 45, 60 35 C70 15, 70 0, 60 0 C50 0, 50 15, 60 35 C50 45, 40 45, 20 40 C30 60, 40 70, 55 80 Z' fill='%23097a36'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        
+        .leaf {
+            position: absolute;
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: bottom;
-            z-index: 2;
-            transition: transform 1s ease-in-out;
+            opacity: 0.8;
+            z-index: 3;
         }
-
-        .plant1 {
-            left: 5%;
-            bottom: 10%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,100 C50,100 30,80 40,60 C50,40 30,30 20,40 C10,50 30,60 40,50" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,150 C50,150 70,130 60,110 C50,90 70,80 80,90 C90,100 70,110 60,100" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,120 C50,120 30,100 35,80 C40,60 20,60 15,70 C10,80 30,90 25,75" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="20" cy="40" rx="15" ry="10" fill="%2329b829" transform="rotate(-20,20,40)"/><ellipse cx="40" cy="50" rx="15" ry="10" fill="%2329b829" transform="rotate(10,40,50)"/><ellipse cx="80" cy="90" rx="15" ry="10" fill="%2329b829" transform="rotate(-15,80,90)"/><ellipse cx="60" cy="100" rx="15" ry="10" fill="%2329b829" transform="rotate(25,60,100)"/><ellipse cx="15" cy="70" rx="15" ry="10" fill="%2329b829" transform="rotate(-10,15,70)"/><ellipse cx="25" cy="75" rx="15" ry="10" fill="%2329b829" transform="rotate(20,25,75)"/></svg>');
+        
+        .leaf1 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 C30 30 10 30 10 50 C10 70 30 80 50 90 C70 80 90 70 90 50 C90 30 70 30 50 10Z' fill='%23008f39'/%3E%3C/svg%3E");
         }
-
-        .plant2 {
-            right: 8%;
-            bottom: 5%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,80 C40,70 20,80 30,50 C40,20 60,30 50,50 C40,70 60,60 70,40 C80,20 90,40 70,50" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="30" cy="50" rx="20" ry="12" fill="%2329b829" transform="rotate(-20,30,50)"/><ellipse cx="50" cy="50" rx="18" ry="10" fill="%2329b829" transform="rotate(15,50,50)"/><ellipse cx="70" cy="40" rx="22" ry="13" fill="%2329b829" transform="rotate(-10,70,40)"/><ellipse cx="70" cy="50" rx="15" ry="8" fill="%2329b829" transform="rotate(25,70,50)"/><circle cx="60" cy="35" r="5" fill="%23ff5555"/><circle cx="40" cy="45" r="4" fill="%23ff5555"/><circle cx="75" cy="55" r="4" fill="%23ff5555"/></svg>');
+        
+        .leaf2 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 50 Q35 20 50 50 Q65 20 80 50 Q50 100 20 50Z' fill='%2334a853'/%3E%3C/svg%3E");
         }
-
-        .plant3 {
-            left: 25%;
-            bottom: 0;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,120 C40,110 20,120 10,100 C0,80 20,70 30,85 C40,100 50,80 60,90 C70,100 80,80 90,90" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,160 C60,150 80,160 75,140 C70,120 90,115 85,130" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="10" cy="100" rx="15" ry="10" fill="%2329b829" transform="rotate(-15,10,100)"/><ellipse cx="30" cy="85" rx="15" ry="10" fill="%2329b829" transform="rotate(10,30,85)"/><ellipse cx="60" cy="90" rx="15" ry="10" fill="%2329b829" transform="rotate(-10,60,90)"/><ellipse cx="90" cy="90" rx="15" ry="10" fill="%2329b829" transform="rotate(20,90,90)"/><ellipse cx="75" cy="140" rx="15" ry="10" fill="%2329b829" transform="rotate(-5,75,140)"/><ellipse cx="85" cy="130" rx="15" ry="10" fill="%2329b829" transform="rotate(15,85,130)"/><circle cx="15" cy="95" r="3" fill="%23ffff00"/><circle cx="85" cy="95" r="3" fill="%23ffff00"/><circle cx="72" cy="138" r="3" fill="%23ffff00"/></svg>');
+        
+        .leaf3 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 C20 40 20 60 10 90 C40 80 60 80 90 90 C80 60 80 40 50 10Z' fill='%232d8639'/%3E%3C/svg%3E");
         }
-
-        .plant4 {
-            right: 30%;
-            bottom: 2%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><path d="M50,200 L50,100 C60,90 80,100 70,70 C60,40 40,60 50,70 C60,80 40,70 30,50 C20,30 10,50 30,60" stroke="%2325a025" stroke-width="3" fill="none"/><path d="M50,140 C40,130 20,140 25,120 C30,100 10,105 15,120" stroke="%2325a025" stroke-width="3" fill="none"/><ellipse cx="70" cy="70" rx="18" ry="12" fill="%2329b829" transform="rotate(-10,70,70)"/><ellipse cx="50" cy="70" rx="16" ry="10" fill="%2329b829" transform="rotate(15,50,70)"/><ellipse cx="30" cy="50" rx="20" ry="13" fill="%2329b829" transform="rotate(-20,30,50)"/><ellipse cx="30" cy="60" rx="14" ry="9" fill="%2329b829" transform="rotate(10,30,60)"/><ellipse cx="25" cy="120" rx="15" ry="10" fill="%2329b829" transform="rotate(-15,25,120)"/><ellipse cx="15" cy="120" rx="12" ry="8" fill="%2329b829" transform="rotate(25,15,120)"/><circle cx="75" cy="75" r="4" fill="%23ff00ff"/><circle cx="35" cy="55" r="4" fill="%23ff00ff"/><circle cx="20" cy="115" r="4" fill="%23ff00ff"/></svg>');
+        
+        .leaf4 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 C60 30 80 30 90 40 C80 60 60 70 50 90 C40 70 20 60 10 40 C20 30 40 30 50 10Z' fill='%2333a843'/%3E%3C/svg%3E");
         }
-
-        /* Foreground vines */
-        .vines {
+        
+        .leaf5 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M30 20 Q50 0 70 20 Q90 50 70 80 Q50 100 30 80 Q10 50 30 20Z' fill='%2300a849'/%3E%3C/svg%3E");
+        }
+        
+        .vine {
             position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
+            width: 10px;
+            background-color: #4a7c59;
+            border-radius: 5px;
+            transform-origin: top center;
+            z-index: 4;
         }
-
-        .vine1 {
+        
+        .vine:after {
+            content: '';
             position: absolute;
-            left: 10%;
-            top: 0;
-            width: 20px;
-            height: 60%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 300"><path d="M10,0 Q15,30 5,50 Q0,70 10,100 Q15,130 5,150 Q0,170 10,200 Q15,230 5,250 Q0,270 10,300" stroke="%23339933" stroke-width="3" fill="none"/><path d="M10,50 L30,60" stroke="%23339933" stroke-width="2" fill="none"/><path d="M5,100 L-15,110" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,150 L30,160" stroke="%23339933" stroke-width="2" fill="none"/><path d="M5,200 L-15,210" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,250 L30,260" stroke="%23339933" stroke-width="2" fill="none"/><ellipse cx="30" cy="60" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,30,60)"/><ellipse cx="-15" cy="110" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-15,110)"/><ellipse cx="30" cy="160" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,30,160)"/><ellipse cx="-15" cy="210" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-15,210)"/><ellipse cx="30" cy="260" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,30,260)"/></svg>');
+            width: 30px;
+            height: 30px;
+            border-radius: 50% 0 50% 50%;
+            background-color: #34a853;
+            bottom: -5px;
+            left: 5px;
+            transform: rotate(45deg);
         }
-
-        .vine2 {
+        
+        .vine-leaf {
             position: absolute;
-            right: 15%;
-            top: 0;
-            width: 20px;
-            height: 70%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 350"><path d="M10,0 Q5,40 15,70 Q20,100 10,130 Q5,160 15,190 Q20,220 10,250 Q5,280 15,310 Q20,330 10,350" stroke="%23339933" stroke-width="3" fill="none"/><path d="M15,70 L35,80" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,130 L-10,140" stroke="%23339933" stroke-width="2" fill="none"/><path d="M15,190 L35,200" stroke="%23339933" stroke-width="2" fill="none"/><path d="M10,250 L-10,260" stroke="%23339933" stroke-width="2" fill="none"/><path d="M15,310 L35,320" stroke="%23339933" stroke-width="2" fill="none"/><ellipse cx="35" cy="80" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,35,80)"/><ellipse cx="-10" cy="140" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-10,140)"/><ellipse cx="35" cy="200" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,35,200)"/><ellipse cx="-10" cy="260" rx="10" ry="6" fill="%2329b829" transform="rotate(10,-10,260)"/><ellipse cx="35" cy="320" rx="10" ry="6" fill="%2329b829" transform="rotate(-10,35,320)"/></svg>');
+            width: 25px;
+            height: 25px;
+            border-radius: 50% 0;
+            background-color: #2d8639;
+            transform: rotate(45deg);
         }
-
-        /* Word display area */
-        .word-display {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 36px;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-            z-index: 100;
-            letter-spacing: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        /* Letter bubble styling */
-        .letter-bubble {
-            position: absolute;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
-            background: radial-gradient(circle at 30% 30%, rgba(145, 188, 150, 0.8), rgba(255, 255, 255, 0.1));
-            z-index: 5;
-            cursor: pointer;
-        }
-
-        /* Particles for letter bubbles */
-        .particle {
+        
+        .firefly {
             position: absolute;
             width: 4px;
             height: 4px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 150, 0.8);
             border-radius: 50%;
-            pointer-events: none;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 150, 0.5);
+            z-index: 5;
+        }
+        
+        .bird {
+            position: absolute;
+            width: 35px;
+            height: 25px;
             z-index: 4;
         }
-
-        /* Fire effect - realistic with multiple colors and flickering */
-        .fire-effect {
+        
+        .toucan {
             position: absolute;
+            width: 50px;
+            height: 35px;
+            z-index: 4;
+        }
+        
+        .frog {
+            position: absolute;
+            width: 25px;
+            height: 20px;
+            bottom: 5%;
+            z-index: 5;
+            opacity: 0.9;
+        }
+        
+        .snake {
+            position: absolute;
+            height: 15px;
+            bottom: 5%;
+            z-index: 5;
+            opacity: 0.9;
+        }
+        
+        .butterfly {
+            position: absolute;
+            width: 30px;
+            height: 25px;
+            z-index: 5;
+        }
+        
+        .monkey {
+            position: absolute;
+            width: 40px;
+            height: 45px;
+            z-index: 5;
+        }
+        
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, #ff4500, #ff8c00, #ffff00);
-            opacity: 0.05;
-            transform: translateY(100%);
-            animation: fire-wipe 2s ease-out forwards;
-        }
-
-        @keyframes fire-wipe {
-            0% {
-                opacity: 0;
-                transform: translateY(100%);
-            }
-
-            50% {
-                opacity: 0.5;
-                transform: translateY(0);
-            }
-
-            100% {
-                opacity: 0;
-                /* Keep fire visible instead of fading out */
-                transform: translateY(0);
-            }
-        }
-
-
-        /* Water effect */
-        .water-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 50;
+            z-index: 6;
             pointer-events: none;
-            overflow: hidden;
+            opacity: 0.8;
+            display: none;
         }
-
-        .water-wave {
+        
+        .rain-drop {
             position: absolute;
-            height: 150%;
-            width: 300%;
-            left: -100%;
-            background: radial-gradient(ellipse at center, rgba(0, 150, 255, 0.7) 0%, rgba(0, 100, 200, 0.5) 40%, rgba(0, 50, 150, 0.3) 70%, rgba(0, 25, 100, 0.1) 100%);
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, rgba(200, 235, 255, 0.7));
+            border-radius: 0 0 5px 5px;
+            filter: blur(0.5px);
+        }
+        
+        .rain-splash {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(200, 235, 255, 0.3);
             opacity: 0;
-            filter: blur(10px);
-            transform: translateY(100%) rotate(-3deg);
-            animation: water-wave 3s ease-in-out forwards;
+            transform: scale(0);
+            animation: splash 0.5s ease-out;
         }
-
-        @keyframes water-wave {
-            0% {
-                opacity: 0;
-                transform: translateY(100%) rotate(-3deg);
-            }
-
-            20% {
-                opacity: 0.8;
-            }
-
-            80% {
-                opacity: 0.8;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-100%) rotate(3deg);
-            }
-        }
-
-        /* Air effect */
-        .air-container {
+        
+        .sun-rays {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 50;
-            pointer-events: none;
-            overflow: hidden;
+            top: 10%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 255, 150, 0.6) 0%, rgba(255, 255, 150, 0) 70%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulse 5s infinite alternate;
         }
-
-        .air-line {
-            position: absolute;
-            height: 5px;
-            width: 120%;
-            left: -10%;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-            filter: blur(2px);
-            transform: translateX(-100%);
-            opacity: 0;
-        }
-
-        /* Earth effect */
-        .earth-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 50;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .rock {
-            position: absolute;
-            background: radial-gradient(ellipse at center, #8b5a2b 0%, #654321 40%, #3b2506 100%);
-            box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.3), inset -2px -2px 5px rgba(0, 0, 0, 0.5);
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            transform: translateY(-100vh) rotate(0deg);
-            opacity: 0;
-        }
-
-        .instruction {
+        
+        .controls {
             position: absolute;
             bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 18px;
-            text-align: center;
+            right: 20px;
             z-index: 100;
+            display: flex;
+            gap: 10px;
         }
+        
+        .control-btn {
+            background-color: rgba(0, 66, 37, 0.7);
+            color: white;
+            border: 1px solid rgba(107, 170, 107, 0.5);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background-color: rgba(0, 88, 49, 0.9);
+        }
+        
+        @keyframes sway {
+            0% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+            100% { transform: rotate(-3deg); }
+        }
+        
+        @keyframes fall {
+            0% { 
+                transform: translateY(-100px) rotate(0deg); 
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translateY(calc(100vh + 100px)) rotate(360deg); 
+                opacity: 0;
+            }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes fly {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            25% { transform: translateY(-15px) translateX(10px) rotate(5deg); }
+            50% { transform: translateY(0) translateX(20px) rotate(-5deg); }
+            75% { transform: translateY(10px) translateX(10px) rotate(5deg); }
+        }
+        
+        @keyframes flutter {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(10deg); }
+            50% { transform: translateY(-10px) rotate(-10deg); }
+            75% { transform: translateY(-5px) rotate(10deg); }
+        }
+        
+        @keyframes hop {
+            0%, 100% { transform: translateY(0) scaleY(1); }
+            50% { transform: translateY(-15px) scaleY(0.9); }
+        }
+        
+        @keyframes slither {
+            0%, 100% { transform: translateX(0) scaleX(1); }
+            50% { transform: translateX(20px) scaleX(1.2); }
+        }
+        
+        @keyframes swing {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(10px) rotate(5deg); }
+            66% { transform: translateY(-10px) rotate(-5deg); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        @keyframes splash {
+            0% { transform: scale(0); opacity: 0.5; }
+            50% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        /* Ambient sounds controls */
+        .sound-control {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sound-btn {
+            background-color: rgba(0, 66, 37, 0.7);
+            color: white;
+            border: 1px solid rgba(107, 170, 107, 0.5);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .sound-btn:hover {
+            background-color: rgba(0, 88, 49, 0.9);
+        }
+        .animal-selector {
+            background-color: rgba(0, 66, 37, 0.7);
+            color: white;
+            border: 1px solid rgba(107, 170, 107, 0.5);
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            outline: none;
+            width: 200px;
+        }
+        
+        .animal-selector:hover {
+            background-color: rgba(0, 88, 49, 0.9);
+        }
+        .nav-button {
+            background-color: rgba(0, 66, 37, 0.8);
+            color: white;
+            border: 2px solid rgba(107, 170, 107, 0.7);
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(0, 88, 49, 0.9);
+            transform: scale(1.05);
+        }
+        .animal-follower {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+    transform: translate(-50%, -50%);
+}
     </style>
 </head>
-
 <body>
-    <div class="jungle-container">
-        <!-- Background elements -->
-        <div class="background bg-trees"></div>
-
-        <!-- Mid-level plants -->
-        <div class="plant plant1"></div>
-        <div class="plant plant2"></div>
-        <div class="plant plant3"></div>
-        <div class="plant plant4"></div>
-
-        <!-- Foreground vines -->
-        <div class="vines">
-            <div class="vine1"></div>
-            <div class="vine2"></div>
+    <div class="jungle-container" id="jungle">
+        <div class="sky-layer"></div>
+        <div class="mountains"></div>
+        <div class="foreground"></div>
+        <div class="sun-rays"></div>
+        
+        <div class="rain" id="rain"></div>
+        
+        <div class="content">
+            <h1>Welcome to the Amazon</h1>
+            <p>Experience the lush, vibrant rainforest teeming with exotic wildlife</p>
+            
+            <!-- Replace text with dropdown directly in content -->
+            <select id="animalSelect" class="animal-selector">
+                <option value="none">Choose an animal...</option>
+                <option value="bird">Bird</option>
+                <option value="toucan">Toucan</option>
+                <option value="frog">Frog</option>
+                <option value="snake">Snake</option>
+                <option value="butterfly">Butterfly</option>
+                <option value="monkey">Monkey</option>
+            </select>
+            
+            <!-- Navigation button -->
+            <button class="nav-button" id="explore-more">Explore More</button>
         </div>
-
-        <!-- Word display area -->
-        <div class="word-display"></div>
-
-        <!-- Effect containers -->
-        <div class="fire-container"></div>
-        <div class="water-container"></div>
-        <div class="air-container"></div>
-        <div class="earth-container"></div>
-
-        <!-- Instructions -->
-        <div class="instruction">Type the words: Fire, Water, Air, or Earth</div>
+        
+        <!-- Animal follower element -->
+        <div class="animal-follower" id="animalFollower"></div>
+        
+        <div class="controls">
+            <button class="control-btn" id="toggle-rain">Toggle Rain</button>
+            <button class="control-btn" id="add-animals">Add Animals</button>
+            <button class="control-btn" id="add-trees">Add Trees</button>
+        </div>
+        
+        <div class="sound-control">
+            <button class="sound-btn" id="toggle-sound">🔇 Jungle Sounds</button>
+            <audio id="jungleAudio" loop>
+                <source src="jungle_sounds.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
     </div>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const container = document.querySelector('.jungle-container');
-    const wordDisplay = document.querySelector('.word-display');
-    const plants = document.querySelectorAll('.plant');
-    const elementWords = ['FIRE', 'WATER', 'AIR', 'EARTH'];
-    let typedLetters = [];
-    let letterCount = 0;
-
-    // Add key event listener
-    document.addEventListener('keydown', function (event) {
-        // Only capture letter keys
-        if (/^[a-zA-Z]$/.test(event.key)) {
-            const letter = event.key.toUpperCase();
-            createLetterBubble(letter);
-            typedLetters.push(letter);
-            letterCount++;
-
-            // Update word display
-            updateWordDisplay();
-
-            // Check if any of the element words have been typed
-            for (let word of elementWords) {
-                if (typedLetters.length >= word.length) {
-                    const lastTyped = typedLetters.slice(-word.length).join('');
-                    if (lastTyped === word) {
-                        wordDisplay.textContent = word;
-                        wordDisplay.style.opacity = 1;
-
-                        setTimeout(() => {
-                            triggerElementEffect(word);
-                            typedLetters = [];
-                            letterCount = 0;
-                            updateWordDisplay();
-                        }, 500);
-                        break;
-                    }
+        document.addEventListener('DOMContentLoaded', function() {
+            const jungle = document.getElementById('jungle');
+            const rainContainer = document.getElementById('rain');
+            const toggleRainBtn = document.getElementById('toggle-rain');
+            const addAnimalsBtn = document.getElementById('add-animals');
+            const addTreesBtn = document.getElementById('add-trees');
+            const toggleSoundBtn = document.getElementById('toggle-sound');
+            const exploreMoreBtn = document.getElementById('explore-more');
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            let isRaining = false;
+            const jungleAudio = document.getElementById('jungleAudio');
+            let soundPlaying = false;
+            const animalFollower = document.getElementById('animalFollower');
+            const animalSelect = document.getElementById('animalSelect');
+            let selectedAnimal = 'none';
+            let targetX = 0;
+            let targetY = 0;
+            let currentX = 0;
+            let currentY = 0;
+            let animating = false;
+            let lastKnownMouseX = window.innerWidth / 2;
+            let lastKnownMouseY = window.innerHeight / 2;
+            
+            // Save animal state for persistence between pages
+            function saveAnimalState() {
+                sessionStorage.setItem('selectedAnimal', selectedAnimal);
+            }
+            
+            // Load animal state from storage
+            function loadAnimalState() {
+                const savedAnimal = sessionStorage.getItem('selectedAnimal');
+                if (savedAnimal && savedAnimal !== 'none') {
+                    selectedAnimal = savedAnimal;
+                    animalSelect.value = savedAnimal;
+                    updateAnimalFollower(selectedAnimal);
                 }
             }
             
-            // Send to Flask every 10 letters
-            if (letterCount >= 10) {
-                sendLettersToFlask();
-                letterCount = 0; // Reset counter after sending
+            // Initialize animal follower with delay
+            function initializeAnimalFollower() {
+                // Load any saved state
+                loadAnimalState();
+                
+                // Listen for mouse movement
+                // Listen for mouse movement
+// Listen for mouse movement
+                document.addEventListener('mousemove', function(event) {
+                    // Always track the mouse position
+                    lastKnownMouseX = event.clientX;
+                    lastKnownMouseY = event.clientY;
+                    
+                    if (selectedAnimal !== 'none') {
+                        // Update target position for animal follower
+                        targetX = event.clientX;
+                        targetY = event.clientY;
+                        
+                        // Start animation if not already animating
+                        if (!animating) {
+                            animating = true;
+                            animateFollower();
+                        }
+                    }
+                });
+                
+                // Listen for animal selection change
+                animalSelect.addEventListener('change', function() {
+                    selectedAnimal = this.value;
+                    
+                    if (selectedAnimal === 'none') {
+                        animalFollower.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Use the tracked mouse position
+                    currentX = lastKnownMouseX;
+                    currentY = lastKnownMouseY;
+                    targetX = lastKnownMouseX;
+                    targetY = lastKnownMouseY;
+                    
+                    // Update the animal follower content based on selection
+                    updateAnimalFollower(selectedAnimal);
+                    
+                    // Display the follower at the current mouse position immediately
+                    animalFollower.style.left = `${currentX}px`;
+                    animalFollower.style.top = `${currentY}px`;
+                    
+                    // Save selection
+                    saveAnimalState();
+                });
             }
-        }
-    });
-
-    function updateWordDisplay() {
-        // Show last 10 typed letters
-        const displayLetters = typedLetters.slice(-10).join('');
-        wordDisplay.textContent = displayLetters;
-        wordDisplay.style.opacity = displayLetters.length > 0 ? 1 : 0;
-    }
-
-    function sendLettersToFlask() {
-        fetch('/receive_letters', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ letters: typedLetters })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Flask received:", data); // Debugging log
-        })
-        .catch(error => console.error("Error sending data to Flask:", error));
-    }
-
-    function createLetterBubble(letter) {
-        const bubble = document.createElement('div');
-        bubble.classList.add('letter-bubble');
-        bubble.textContent = letter;
-
-        // Random position in bottom section
-        const size = Math.floor(Math.random() * 30) + 40;
-        const x = Math.random() * (window.innerWidth - size);
-        const y = bottomSection + Math.random() * (window.innerHeight - bottomSection - size);
-
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        bubble.style.left = `${x}px`;
-        bubble.style.top = `${y}px`;
-
-        // Add bubble entrance animation
-        bubble.style.transform = 'scale(0)';
-        bubble.style.opacity = '0';
-        bubble.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
-
-        container.appendChild(bubble);
-
-        // Create particles around the bubble
-        createBubbleParticles(x + size / 2, y + size / 2, size);
-
-        // Trigger animation after a small delay
-        setTimeout(() => {
-            bubble.style.transform = 'scale(1)';
-            bubble.style.opacity = '1';
-        }, 10);
-
-        // Start floating upward with delays
-        setTimeout(() => {
-            bubble.style.transition = 'all 3s ease-in-out';
-            const randomX = x + (Math.random() * 100 - 50);
-            const randomY = y - (100 + Math.random() * 100);
-            bubble.style.left = `${randomX}px`;
-            bubble.style.top = `${randomY}px`;
-            bubble.style.opacity = '0.7';
-        }, 300);
-
-        // Remove bubble after animation
-        setTimeout(() => {
-            if (bubble.parentNode) {
-                bubble.parentNode.removeChild(bubble);
-            }
-        }, 3500);
-    }
-
-    // Define the bottomSection variable that was missing
-    const bottomSection = window.innerHeight * 0.6;
-
-    // Include all your other functions
-    function createBubbleParticles(x, y, size) {
-        const particleCount = 8;
-
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-
-            // Position at bubble center
-            particle.style.left = `${x}px`;
-            particle.style.top = `${y}px`;
-
-            // Set random size
-            const particleSize = Math.random() * 4 + 2;
-            particle.style.width = `${particleSize}px`;
-            particle.style.height = `${particleSize}px`;
-
-            // Add to container
-            container.appendChild(particle);
-
-            // Animate outward
-            const angle = (i / particleCount) * Math.PI * 2;
-            const distance = size / 2 + Math.random() * 20;
-            const duration = 0.5 + Math.random() * 0.5;
-
-            particle.style.transition = `all ${duration}s ease-out`;
-
-            setTimeout(() => {
-                const targetX = x + Math.cos(angle) * distance;
-                const targetY = y + Math.sin(angle) * distance;
-                particle.style.left = `${targetX}px`;
-                particle.style.top = `${targetY}px`;
-                particle.style.opacity = '0';
-            }, 10);
-
-            // Remove particle after animation
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
-                }
-            }, duration * 1000 + 100);
-        }
-    }
-
-    function triggerElementEffect(element) {
-        // Remove all letter bubbles
-        const bubbles = document.querySelectorAll('.letter-bubble');
-        bubbles.forEach(bubble => {
-            bubble.style.transition = 'all 0.5s ease-out';
-            bubble.style.transform = 'scale(0)';
-            bubble.style.opacity = '0';
-
-            setTimeout(() => {
-                if (bubble.parentNode) {
-                    bubble.parentNode.removeChild(bubble);
-                }
-            }, 500);
-        });
-
-        // Clear word display
-        setTimeout(() => {
-            wordDisplay.style.opacity = 0;
-        }, 1000);
-
-        switch (element) {
-            case 'FIRE':
-                createFireEffect();
-                animatePlants('fire');
-                break;
-
-            case 'WATER':
-                createWaterEffect();
-                animatePlants('water');
-                break;
-
-            case 'AIR':
-                createAirEffect();
-                animatePlants('air');
-                break;
-
-            case 'EARTH':
-                createEarthEffect();
-                animatePlants('earth');
-                break;
-        }
-    }
-
-    // Include all your element effect functions here
-    function createFireEffect() {
-        const fireContainer = document.querySelector('.fire-container');
-        fireContainer.innerHTML = ''; // Clear previous fire effect
-
-        // Create fire effect div
-        const fireEffect = document.createElement('div');
-        fireEffect.classList.add('fire-effect');
-
-        fireContainer.appendChild(fireEffect);
-
-        // Remove fire after animation completes
-        setTimeout(() => {
-            fireEffect.remove();
-        }, 2000); // Match the duration of the animation
-    }
-
-    function createWaterEffect() {
-        // Your existing water effect code
-        const waterContainer = document.querySelector('.water-container');
-        waterContainer.innerHTML = '';
-
-        // Create 3 waves with different timings
-        for (let i = 0; i < 3; i++) {
-            const wave = document.createElement('div');
-            wave.classList.add('water-wave');
-
-            // Set different positions and delays
-            wave.style.top = `${20 + i * 15}%`;
-            wave.style.animationDelay = `${i * 0.3}s`;
-
-            waterContainer.appendChild(wave);
-
-            // Remove wave after animation
-            setTimeout(() => {
-                if (wave.parentNode) {
-                    wave.parentNode.removeChild(wave);
-                }
-            }, 3000 + i * 300);
-        }
-
-        // Create water droplets
-        for (let i = 0; i < 60; i++) {
-            setTimeout(() => {
-                const droplet = document.createElement('div');
-                droplet.style.position = 'absolute';
-                droplet.style.width = `${Math.random() * 8 + 4}px`;
-                droplet.style.height = `${Math.random() * 12 + 8}px`;
-                droplet.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
-                droplet.style.background = 'radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(150,200,255,0.6) 60%, rgba(100,150,255,0.4) 100%)';
-                droplet.style.filter = 'blur(1px)';
-
-                // Random position
-                droplet.style.left = `${Math.random() * 100}%`;
-                droplet.style.top = `${Math.random() * 100}%`;
-
-                // Animation
-                const duration = 1 + Math.random();
-                droplet.style.transition = `all ${duration}s ease-in-out`;
-                droplet.style.opacity = '0';
-                droplet.style.transform = 'scale(0)';
-
-                waterContainer.appendChild(droplet);
-
-                // Start animation
-                setTimeout(() => {
-                    droplet.style.opacity = '1';
-                    droplet.style.transform = 'scale(1)';
-                }, 10);
-
-                // Fade out
-                setTimeout(() => {
-                    droplet.style.opacity = '0';
-                }, duration * 500);
-
-                // Remove droplet
-                setTimeout(() => {
-                    if (droplet.parentNode) {
-                        droplet.parentNode.removeChild(droplet);
-                    }
-                }, duration * 1000);
-            }, i * 50);
-        }
-    }
-
-    function createAirEffect() {
-        // Your existing air effect code
-        const airContainer = document.querySelector('.air-container');
-        airContainer.innerHTML = '';
-
-        // Create multiple air lines with different delays and positions
-        for (let i = 0; i < 15; i++) {
-            setTimeout(() => {
-                const line = document.createElement('div');
-                line.classList.add('air-line');
-
-                // Random position and properties
-                line.style.top = `${Math.random() * 100}%`;
-                line.style.height = `${Math.random() * 5 + 2}px`;
-                line.style.opacity = '0';
-
-                // Animation
-                const duration = 1 + Math.random() * 0.5;
-                line.style.transition = `all ${duration}s ease-out`;
-
-                airContainer.appendChild(line);
-
-                // Start animation
-                setTimeout(() => {
-                    line.style.opacity = '0.8';
-                    line.style.transform = 'translateX(100%)';
-                }, 10);
-
-                // Remove line after animation
-                setTimeout(() => {
-                    if (line.parentNode) {
-                        line.parentNode.removeChild(line);
-                    }
-                }, duration * 1000 + 100);
-            }, i * 150);
-        }
-
-        // Create air particles
-        for (let i = 0; i < 80; i++) {
-            setTimeout(() => {
-                const particle = document.createElement('div');
-                particle.style.position = 'absolute';
-                particle.style.width = `${Math.random() * 4 + 2}px`;
-                particle.style.height = `${Math.random() * 4 + 2}px`;
-                particle.style.borderRadius = '50%';
-                particle.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-                particle.style.filter = 'blur(1px)';
-
-                // Random position on left side
-                particle.style.left = `-10px`;
-                particle.style.top = `${Math.random() * 100}%`;
-
-                // Animation
-                const speed = 1 + Math.random() * 2;
-                particle.style.transition = `all ${speed}s linear`;
-
-                airContainer.appendChild(particle);
-
-                // Start animation
-                setTimeout(() => {
-                    particle.style.left = `110%`;
-                    // Random vertical movement
-                    particle.style.top = `${parseFloat(particle.style.top) + (Math.random() * 20 - 10)}%`;
-                }, 10);
-
-                // Remove particle after animation
-                setTimeout(() => {
-                    if (particle.parentNode) {
-                        particle.parentNode.removeChild(particle);
-                    }
-                }, speed * 1000 + 100);
-            }, i * 30);
-        }
-
-        // Clear air container after effect
-        setTimeout(() => {
-            airContainer.innerHTML = '';
-        }, 5000);
-    }
-
-    function createEarthEffect() {
-        // Your existing earth effect code
-        const earthContainer = document.querySelector('.earth-container');
-        earthContainer.innerHTML = '';
-
-        // Create dust cloud at bottom
-        const dustCloud = document.createElement('div');
-        dustCloud.style.position = 'absolute';
-        dustCloud.style.bottom = '0';
-        dustCloud.style.left = '0';
-        dustCloud.style.width = '100%';
-        dustCloud.style.height = '20%';
-        dustCloud.style.background = 'radial-gradient(ellipse at center, rgba(139, 69, 19, 0.5) 0%, rgba(139, 69, 19, 0.3) 50%, rgba(139, 69, 19, 0) 100%)';
-        dustCloud.style.filter = 'blur(5px)';
-        dustCloud.style.opacity = '0';
-        dustCloud.style.transition = 'opacity 2s ease-in-out';
-
-        earthContainer.appendChild(dustCloud);
-
-        setTimeout(() => {
-            dustCloud.style.opacity = '1';
-
-            setTimeout(() => {
-                dustCloud.style.opacity = '0';
-            }, 1500);
-        }, 500);
-
-        // Create rocks falling
-        for (let i = 0; i < 30; i++) {
-            setTimeout(() => {
-                const rock = document.createElement('div');
-                rock.classList.add('rock');
-
-                // Random properties
-                const size = Math.random() * 60 + 20;
-                const left = Math.random() * 100;
-                const duration = 1 + Math.random() * 1.5;
-                const rotationStart = Math.random() * 360;
-                const rotationEnd = rotationStart + (Math.random() * 720 - 360);
-
-                rock.style.width = `${size}px`;
-                rock.style.height = `${size * 0.8}px`;
-                rock.style.left = `${left}%`;
-
-                // Set animation
-                rock.style.transition = `transform ${duration}s cubic-bezier(0.5, 0, 1, 0.5), opacity ${duration}s ease-in`;
-
-                earthContainer.appendChild(rock);
-
-                // Start animation after a small delay
-                setTimeout(() => {
-                    rock.style.opacity = '1';
-                    rock.style.transform = `translateY(120vh) rotate(${rotationEnd}deg)`;
-                }, 50);
-
-                // Add impact effect when rock hits bottom
-                setTimeout(() => {
-                    createImpactEffect(left, size);
-                }, duration * 1000);
-
-                // Remove rock after animation
-                setTimeout(() => {
-                    if (rock.parentNode) {
-                        rock.parentNode.removeChild(rock);
-                    }
-                }, duration * 1000 + 200);
-            }, i * 100);
-        }
-
-        // Clear earth container after effect
-        setTimeout(() => {
-            earthContainer.innerHTML = '';
-        }, 6000);
-    }
-
-    function createImpactEffect(x, size) {
-        const impactCircle = document.createElement('div');
-        impactCircle.style.position = 'absolute';
-        impactCircle.style.bottom = '0';
-        impactCircle.style.left = `${x}%`;
-        impactCircle.style.width = '10px';
-        impactCircle.style.height = '10px';
-        impactCircle.style.borderRadius = '50%';
-        impactCircle.style.backgroundColor = 'rgba(139, 69, 19, 0.7)';
-        impactCircle.style.filter = 'blur(2px)';
-        impactCircle.style.transform = 'translate(-50%, 0)';
-        impactCircle.style.transition = 'all 0.5s ease-out';
-
-        document.querySelector('.earth-container').appendChild(impactCircle);
-
-        // Expand impact circle
-        setTimeout(() => {
-            impactCircle.style.width = `${size * 2}px`;
-            impactCircle.style.height = `${size * 2}px`;
-            impactCircle.style.opacity = '0';
-        }, 10);
-
-        // Remove impact circle
-        setTimeout(() => {
-            if (impactCircle.parentNode) {
-                impactCircle.parentNode.removeChild(impactCircle);
-            }
-        }, 510);
-
-        // Create dust particles
-        for (let i = 0; i < 10; i++) {
-            const dust = document.createElement('div');
-            dust.style.position = 'absolute';
-            dust.style.bottom = '5px';
-            dust.style.left = `${x}%`;
-            dust.style.width = `${Math.random() * 6 + 4}px`;
-            dust.style.height = `${Math.random() * 6 + 4}px`;
-            dust.style.borderRadius = '50%';
-            dust.style.backgroundColor = 'rgba(139, 69, 19, 0.5)';
-            dust.style.filter = 'blur(1px)';
-            dust.style.transform = 'translate(-50%, 0)';
-            dust.style.transition = 'all 0.8s ease-out';
-
-            document.querySelector('.earth-container').appendChild(dust);
-
-            // Animate dust particle
-            const angle = Math.random() * Math.PI;
-            const distance = Math.random() * 50 + 20;
-
-            setTimeout(() => {
-                dust.style.bottom = `${5 + Math.sin(angle) * distance}px`;
-                dust.style.left = `calc(${x}% + ${Math.cos(angle) * distance}px)`;
-                dust.style.opacity = '0';
-            }, 10);
-
-            // Remove dust particle
-            setTimeout(() => {
-                if (dust.parentNode) {
-                    dust.parentNode.removeChild(dust);
-                }
-            }, 810);
-        }
-    }
-
-    function animatePlants(elementType) {
-        plants.forEach((plant, index) => {
-            switch (elementType) {
-                case 'fire':
-                    const fire = document.createElement('div');
-                    fire.classList.add('fire-effect');
-                    container.appendChild(fire);
-
-                    setTimeout(() => {
-                        fire.remove();
-                    }, 2000);
-                    break;
-                case 'water':
-                    // Plants sway in water
-                    plant.style.transform = `translateY(5px) rotate(${(index % 2 === 0) ? -5 : 5}deg)`;
-                    break;
-                case 'air':
-                    // Plants bend in wind direction
-                    plant.style.transform = `skewX(-15deg) rotate(${(index % 2 === 0) ? -8 : -2}deg)`;
-                    break;
-                case 'earth':
-                    // Plants shake from impact
-                    plant.style.transform = `translateY(${Math.sin(index) * 5}px)`;
-
-                    // Add shake animation
-                    plant.style.animation = 'shake 0.5s ease-in-out';
-                    plant.style.animationIterationCount = '3';
-
-                    // Define shake animation
-                    if (!document.querySelector('#shakeAnimation')) {
-                        const style = document.createElement('style');
-                        style.id = 'shakeAnimation';
-                        style.textContent = `
-                            @keyframes shake {
-                                0%, 100% { transform: translateX(0); }
-                                20% { transform: translateX(-5px); }
-                                40% { transform: translateX(5px); }
-                                60% { transform: translateX(-3px); }
-                                80% { transform: translateX(3px); }
-                            }
-                        `;
-                        document.head.appendChild(style);
-                    }
-                    break;
-            }
-
-            // Reset plant animation/position after effect
-            setTimeout(() => {
-                plant.style.transform = '';
-                plant.style.animation = '';
-            }, 3000);
-        });
-    }
-
-    // Define flicker animation for fire particles
-    const flickerStyle = document.createElement('style');
-    flickerStyle.textContent = `
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        
-        @keyframes bubble-pop {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.9; }
-        }
-        
-        @keyframes float-up {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100px); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(flickerStyle);
+            document.getElementById("explore-more").addEventListener("click", function() {
+    window.location.href = "{{url_for('load')}}";
 });
+            
+            // Animate the follower with smooth movement and delay
+            function animateFollower() {
+                // Calculate distance to target
+                const dx = targetX - currentX;
+                const dy = targetY - currentY;
+                
+                // Move current position closer to target (easing factor)
+                currentX += dx * 0.1;
+                currentY += dy * 0.1;
+                
+                // Apply current position to follower
+                animalFollower.style.left = `${currentX}px`;
+                animalFollower.style.top = `${currentY}px`;
+                
+                // Add random "life-like" movement
+                addLifelikeMovement();
+                
+                // Continue animation if still significant movement needed
+                if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                    requestAnimationFrame(animateFollower);
+                } else {
+                    animating = false;
+                }
+            }
+            
+            // Add life-like movement to animal follower
+            function addLifelikeMovement() {
+                if (selectedAnimal === 'none') return;
+                
+                // Different movement for each animal type
+                switch(selectedAnimal) {
+                    case 'bird':
+                    case 'toucan':
+                        // Flying motion
+                        if (Math.random() < 0.05) {
+                            animalFollower.style.animation = 'wiggle 0.5s ease-in-out';
+                            setTimeout(() => {
+                                animalFollower.style.animation = '';
+                            }, 500);
+                        }
+                        break;
+                    case 'frog':
+                        // Hopping motion
+                        if (Math.random() < 0.02) {
+                            animalFollower.style.animation = 'bounce 0.8s ease-in-out';
+                            setTimeout(() => {
+                                animalFollower.style.animation = '';
+                            }, 800);
+                        }
+                        break;
+                    case 'snake':
+                        // Slithering motion
+                        animalFollower.style.animation = 'breathe 2s infinite';
+                        break;
+                    case 'butterfly':
+                        // Fluttering motion
+                        animalFollower.style.animation = 'flutter 2s infinite';
+                        break;
+                    case 'monkey':
+                        // Playful motion
+                        if (Math.random() < 0.03) {
+                            animalFollower.style.animation = 'happy 1s ease-in-out';
+                            setTimeout(() => {
+                                animalFollower.style.animation = '';
+                            }, 1000);
+                        }
+                        break;
+                }
+            }
+            
+            // Update animal follower content
+            function updateAnimalFollower(animalType) {
+                // Clear previous content
+                animalFollower.innerHTML = '';
+                
+                // Set size based on animal type
+                switch(animalType) {
+                    case 'bird':
+                        animalFollower.style.width = '35px';
+                        animalFollower.style.height = '25px';
+                        animalFollower.innerHTML = createBirdSVG();
+                        break;
+                    case 'toucan':
+                        animalFollower.style.width = '50px';
+                        animalFollower.style.height = '35px';
+                        animalFollower.innerHTML = createToucanSVG();
+                        break;
+                    case 'frog':
+                        animalFollower.style.width = '25px';
+                        animalFollower.style.height = '20px';
+                        animalFollower.innerHTML = createFrogSVG();
+                        break;
+                    case 'snake':
+                        animalFollower.style.width = '80px';
+                        animalFollower.style.height = '15px';
+                        animalFollower.innerHTML = createSnakeSVG();
+                        break;
+                    case 'butterfly':
+                        animalFollower.style.width = '30px';
+                        animalFollower.style.height = '25px';
+                        animalFollower.innerHTML = createButterflySVG();
+                        break;
+                    case 'monkey':
+                        animalFollower.style.width = '40px';
+                        animalFollower.style.height = '45px';
+                        animalFollower.innerHTML = createMonkeySVG();
+                        break;
+                }
+                
+                // Show follower if animal is selected
+                if (animalType !== 'none') {
+                    animalFollower.style.display = 'block';
+                }
+            }
+            
+            // Create SVG for each animal type
+            function createBirdSVG() {
+                const birdColors = ['#f44336', '#ff9800', '#ffeb3b', '#4caf50', '#2196f3', '#673ab7'];
+                const color = birdColors[Math.floor(Math.random() * birdColors.length)];
+                
+                return `<svg viewBox="0 0 35 25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 14 Q 10 4, 18 14" stroke="${color}" fill="transparent" stroke-width="2"/>
+                    <path d="M18 14 Q 25 4, 33 14" stroke="${color}" fill="transparent" stroke-width="2"/>
+                    <circle cx="17" cy="10" r="5" fill="${color}"/>
+                    <circle cx="19" cy="8" r="1" fill="white"/>
+                    <path d="M16 13 L20 12" stroke="black" stroke-width="0.7" fill="transparent"/>
+                </svg>`;
+            }
+            
+            function createToucanSVG() {
+                return `<svg viewBox="0 0 50 35" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="15" cy="20" rx="10" ry="8" fill="black"/>
+                    <path d="M15 12 C20 5, 28 8, 30 15 C40 15, 45 18, 48 20 C45 22, 40 25, 30 25 C28 32, 20 35, 15 28" fill="black"/>
+                    <path d="M30 15 C40 15, 45 18, 48 20 C45 22, 40 25, 30 25" fill="#ffde59" stroke="black" stroke-width="0.5"/>
+                    <circle cx="12" cy="17" r="1.5" fill="white"/>
+                    <circle cx="12" cy="17" r="0.5" fill="black"/>
+                </svg>`;
+            }
+            
+            function createFrogSVG() {
+                return `<svg viewBox="0 0 25 20" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="12.5" cy="12" rx="12" ry="7" fill="#4CAF50"/>
+                    <circle cx="8" cy="7" r="3" fill="#8BC34A"/>
+                    <circle cx="17" cy="7" r="3" fill="#8BC34A"/>
+                    <circle cx="8" cy="7" r="1" fill="black"/>
+                    <circle cx="17" cy="7" r="1" fill="black"/>
+                    <path d="M10 13 Q12.5 15, 15 13" stroke="black" fill="transparent" stroke-width="0.5"/>
+                </svg>`;
+            }
+            
+            function createSnakeSVG() {
+                return `<svg viewBox="0 0 80 15" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5 Q20 2, 30 7.5 Q40 13, 50 7.5 Q60 2, 75 7.5" stroke="#4CAF50" stroke-width="5" fill="transparent" stroke-linecap="round"/>
+                    <circle cx="75" cy="7.5" r="3" fill="#8BC34A"/>
+                    <circle cx="77" cy="6" r="0.8" fill="black"/>
+                    <circle cx="77" cy="9" r="0.8" fill="black"/>
+                    <path d="M78 7.5 L80 7.5" stroke="black" stroke-width="0.5"/>
+                </svg>`;
+            }
+            
+            function createButterflySVG() {
+                const wingColors = ['#EA80FC', '#FF80AB', '#B9F6CA', '#FFFF8D', '#84FFFF'];
+                const color1 = wingColors[Math.floor(Math.random() * wingColors.length)];
+                const color2 = wingColors[Math.floor(Math.random() * wingColors.length)];
+                
+                return `<svg viewBox="0 0 30 25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12.5 Q5 5, 15 5 Q25 5, 25 12.5" fill="${color1}" stroke="black" stroke-width="0.3"/>
+                    <path d="M5 12.5 Q5 20, 15 20 Q25 20, 25 12.5" fill="${color2}" stroke="black" stroke-width="0.3"/>
+                    <path d="M15 5 L15 20" stroke="black" stroke-width="1"/>
+                    <circle cx="15" cy="10" r="0.8" fill="black"/>
+                    <circle cx="15" cy="13" r="0.8" fill="black"/>
+                    <circle cx="15" cy="16" r="0.8" fill="black"/>
+                </svg>`;
+            }
+            
+            function createMonkeySVG() {
+                return `<svg viewBox="0 0 40 45" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="15" r="10" fill="#8D6E63"/>
+                    <circle cx="20" cy="30" r="12" fill="#8D6E63"/>
+                    <circle cx="14" cy="12" r="2" fill="#EFEBE9"/>
+                    <circle cx="26" cy="12" r="2" fill="#EFEBE9"/>
+                    <circle cx="14" cy="12" r="1" fill="black"/>
+                    <circle cx="26" cy="12" r="1" fill="black"/>
+                    <ellipse cx="20" cy="17" rx="4" ry="2" fill="#6D4C41"/>
+                    <path d="M3 10 Q1 5, 5 3 Q10 0, 12 5" fill="#8D6E63"/>
+                    <path d="M37 10 Q39 5, 35 3 Q30 0, 28 5" fill="#8D6E63"/>
+                    <path d="M16 23 L12 35" stroke="#8D6E63" stroke-width="3" fill="transparent"/>
+                    <path d="M24 23 L28 35" stroke="#8D6E63" stroke-width="3" fill="transparent"/>
+                    <path d="M18 40 L16 45" stroke="#8D6E63" stroke-width="3" fill="transparent"/>
+                    <path d="M22 40 L24 45" stroke="#8D6E63" stroke-width="3" fill="transparent"/>
+                </svg>`;
+            }
+            initializeAnimalFollower();
+
+            // Create initial trees
+            for (let i = 0; i < 6; i++) {
+                createTree();
+            }
+            
+            // Create leaves
+            for (let i = 0; i < 50; i++) {
+                createLeaf();
+            }
+            
+            // Create vines
+            for (let i = 0; i < 12; i++) {
+                createVine();
+            }
+            
+            // Create fireflies
+            for (let i = 0; i < 40; i++) {
+                createFirefly();
+            }
+            
+            // Create initial animals
+            for (let i = 0; i < 3; i++) {
+                createBird();
+                createFrog();
+                createButterfly();
+            }
+            
+            // Create one monkey and one snake
+            createMonkey();
+            createSnake();
+            createToucan();
+            
+            // Create raindrops (initially hidden)
+            createRainEffect();
+            
+            // Event listeners for controls
+            toggleRainBtn.addEventListener('click', function() {
+                isRaining = !isRaining;
+                rainContainer.style.display = isRaining ? 'block' : 'none';
+                
+                // Add splash effect when rain starts
+                if (isRaining) {
+                    createRainSplashes();
+                }
+            });
+            
+            addAnimalsBtn.addEventListener('click', function() {
+                for (let i = 0; i < 2; i++) {
+                    createBird();
+                    createFrog();
+                    createButterfly();
+                }
+                createMonkey();
+                createSnake();
+                createToucan();
+            });
+            
+            addTreesBtn.addEventListener('click', function() {
+                for (let i = 0; i < 3; i++) {
+                    createTree();
+                }
+            });
+            
+            toggleSoundBtn.addEventListener('click', function () {
+                soundPlaying = !soundPlaying;
+                if (soundPlaying) {
+                    jungleAudio.play();
+                    toggleSoundBtn.innerHTML = '🔊 Jungle Sounds';
+                } else {
+                    jungleAudio.pause();
+                    toggleSoundBtn.innerHTML = '🔇 Jungle Sounds';
+                }
+            });
+            
+            function createTree() {
+                const tree = document.createElement('div');
+                const treeTypes = ['tree1', 'tree2', 'tree3'];
+                const treeType = treeTypes[Math.floor(Math.random() * treeTypes.length)];
+                const width = Math.random() * 120 + 80;
+                const height = width * 2; // Maintain aspect ratio
+                
+                tree.className = `tree ${treeType}`;
+                tree.style.width = `${width}px`;
+                tree.style.height = `${height}px`;
+                tree.style.left = `${Math.random() * 90}%`;
+                tree.style.zIndex = Math.floor(Math.random() * 3) + 3;
+                
+                jungle.appendChild(tree);
+            }
+            
+            function createLeaf() {
+                const leaf = document.createElement('div');
+                const leafTypes = ['leaf1', 'leaf2', 'leaf3', 'leaf4', 'leaf5'];
+                const size = Math.random() * 80 + 40;
+                
+                leaf.className = `leaf ${leafTypes[Math.floor(Math.random() * leafTypes.length)]}`;
+                leaf.style.width = `${size}px`;
+                leaf.style.height = `${size}px`;
+                leaf.style.left = `${Math.random() * 100}%`;
+                leaf.style.top = `-${size}px`;
+                leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                leaf.style.animation = `fall ${Math.random() * 15 + 20}s linear infinite`;
+                leaf.style.animationDelay = `${Math.random() * 30}s`;
+                
+                jungle.appendChild(leaf);
+            }
+            
+            function createVine() {
+                const vine = document.createElement('div');
+                const height = Math.random() * 400 + 200;
+                const left = Math.random() * 90 + 5;
+                
+                vine.className = 'vine';
+                vine.style.height = `${height}px`;
+                vine.style.left = `${left}%`;
+                vine.style.top = '0';
+                vine.style.animation = `sway ${Math.random() * 5 + 4}s ease-in-out infinite`;
+                vine.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // Add some leaves to the vine
+                const leafCount = Math.floor(Math.random() * 5) + 2;
+                for (let i = 0; i < leafCount; i++) {
+                    const vineLeaf = document.createElement('div');
+                    vineLeaf.className = 'vine-leaf';
+                    vineLeaf.style.left = `${Math.random() < 0.5 ? -15 : 5}px`;
+                    vineLeaf.style.top = `${(height / (leafCount + 1)) * (i + 1)}px`;
+                    vineLeaf.style.transform = `rotate(${Math.random() * 90 + 45}deg)`;
+                    vine.appendChild(vineLeaf);
+                }
+                
+                jungle.appendChild(vine);
+            }
+            
+            function createFirefly() {
+                const firefly = document.createElement('div');
+                
+                firefly.className = 'firefly';
+                firefly.style.left = `${Math.random() * viewportWidth}px`;
+                firefly.style.top = `${Math.random() * viewportHeight * 0.8}px`;
+                firefly.style.animation = `blink ${Math.random() * 3 + 2}s ease-in-out infinite`;
+                
+                jungle.appendChild(firefly);
+                
+                // Animate firefly movement
+                animateFirefly(firefly);
+            }
+            
+            function animateFirefly(firefly) {
+                let x = parseFloat(firefly.style.left);
+                let y = parseFloat(firefly.style.top);
+                let destX = Math.random() * viewportWidth;
+                let destY = Math.random() * viewportHeight * 0.8;
+                let speed = 0.4;
+                
+                function moveFirefly() {
+                    // Calculate direction and move slightly
+                    let dx = destX - x;
+                    let dy = destY - y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 5) {
+                        // Set new destination
+                        destX = Math.random() * viewportWidth;
+                        destY = Math.random() * viewportHeight * 0.8;
+                    } else {
+                        x += dx * speed / distance;
+                        y += dy * speed / distance;
+                        firefly.style.left = `${x}px`;
+                        firefly.style.top = `${y}px`;
+                    }
+                    
+                    requestAnimationFrame(moveFirefly);
+                }
+                
+                moveFirefly();
+            }
+            
+            function createRainEffect() {
+                // Create raindrops (initially hidden)
+                for (let i = 0; i < 250; i++) {
+                    createRaindrop();
+                }
+            }
+            
+            function createRaindrop() {
+                const raindrop = document.createElement('div');
+                
+                raindrop.className = 'rain-drop';
+                raindrop.style.left = `${Math.random() * 100}%`;
+                raindrop.style.top = `-${Math.random() * 100}px`;
+                raindrop.style.transform = `rotate(${Math.random() * 5 + 5}deg)`;
+                raindrop.style.opacity = `${Math.random() * 0.3 + 0.5}`;
+                raindrop.style.animation = `fall ${Math.random() * 0.5 + 0.8}s linear infinite`;
+                raindrop.style.animationDelay = `${Math.random() * 2}s`;
+                
+                rainContainer.appendChild(raindrop);
+            }
+            
+            function createRainSplashes() {
+                // Only create splashes when it's raining
+                if (!isRaining) return;
+                
+                const splash = document.createElement('div');
+                splash.className = 'rain-splash';
+                splash.style.left = `${Math.random() * 100}%`;
+                splash.style.bottom = `${Math.random() * 20}%`;
+                
+                rainContainer.appendChild(splash);
+                
+                // Remove splash after animation completes
+                setTimeout(() => {
+                    splash.remove();
+                    // Create new splash if still raining
+                    if (isRaining) {
+                        createRainSplashes();
+                    }
+                }, 500);
+            }
+            
+            function createBird() {
+                const bird = document.createElement('div');
+                
+                bird.className = 'bird';
+                bird.style.left = `${Math.random() * 80 + 10}%`;
+                bird.style.top = `${Math.random() * 30 + 10}%`;
+                bird.style.animation = `fly ${Math.random() * 8 + 7}s ease-in-out infinite`;
+                
+                // SVG for birds in different colors
+                const birdColors = ['#f44336', '#ff9800', '#ffeb3b', '#4caf50', '#2196f3', '#673ab7'];
+                const color = birdColors[Math.floor(Math.random() * birdColors.length)];
+                
+                bird.innerHTML = `<svg viewBox="0 0 35 25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 14 Q 10 4, 18 14" stroke="${color}" fill="transparent" stroke-width="2"/>
+                    <path d="M18 14 Q 25 4, 33 14" stroke="${color}" fill="transparent" stroke-width="2"/>
+                    <circle cx="17" cy="10" r="5" fill="${color}"/>
+                    <circle cx="19" cy="8" r="1" fill="white"/>
+                    <path d="M16 13 L20 12" stroke="black" stroke-width="0.7" fill="transparent"/>
+                </svg>`;
+                
+                jungle.appendChild(bird);
+            }
+            
+            function createToucan() {
+                const toucan = document.createElement('div');
+                
+                toucan.className = 'toucan';
+                toucan.style.left = `${Math.random() * 70 + 10}%`;
+                toucan.style.top = `${Math.random() * 20 + 15}%`;
+                toucan.style.animation = `fly ${Math.random() * 12 + 10}s ease-in-out infinite`;
+                
+                toucan.innerHTML = `<svg viewBox="0 0 50 35" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="15" cy="20" rx="10" ry="8" fill="black"/>
+                    <path d="M15 12 L15 5 L40 10 L40 25 L15 30 L15 28" fill="orange" stroke="black" stroke-width="0.5"/>
+                    <path d="M38 12 L38 23" stroke="black" stroke-width="0.5" fill="transparent"/>
+                    <circle cx="10" cy="17" r="1.5" fill="white"/>
+                    <path d="M5 20 L25 20" stroke="black" stroke-width="1.5" fill="transparent"/>
+                </svg>`;
+                
+                jungle.appendChild(toucan);
+            }
+            
+            function createFrog() {
+                const frog = document.createElement('div');
+                
+                frog.className = 'frog';
+                frog.style.left = `${Math.random() * 80 + 10}%`;
+                frog.style.animation = `hop ${Math.random() * 3 + 3}s ease-in-out infinite`;
+                
+                // SVG for frog
+                const frogColors = ['#4CAF50', '#8BC34A', '#CDDC39', '#009688'];
+                const color = frogColors[Math.floor(Math.random() * frogColors.length)];
+                
+                frog.innerHTML = `<svg viewBox="0 0 25 20" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="12.5" cy="12" rx="10" ry="6" fill="${color}"/>
+                    <circle cx="8" cy="8" r="3" fill="#9CCC65"/>
+                    <circle cx="17" cy="8" r="3" fill="#9CCC65"/>
+                    <circle cx="8" cy="8" r="1" fill="black"/>
+                    <circle cx="17" cy="8" r="1" fill="black"/>
+                    <path d="M9 14 Q 12.5 16, 16 14" stroke="black" stroke-width="0.5" fill="transparent"/>
+                </svg>`;
+                
+                jungle.appendChild(frog);
+            }
+            
+            function createSnake() {
+                const snake = document.createElement('div');
+                const length = Math.random() * 50 + 80;
+                
+                snake.className = 'snake';
+                snake.style.width = `${length}px`;
+                snake.style.left = `${Math.random() * 70 + 5}%`;
+                snake.style.animation = `slither ${Math.random() * 4 + 3}s ease-in-out infinite`;
+                
+                // SVG for snake
+                const snakeColors = ['#4CAF50', '#FF9800', '#F44336', '#9C27B0'];
+                const color = snakeColors[Math.floor(Math.random() * snakeColors.length)];
+                const patternColor = snakeColors[Math.floor(Math.random() * snakeColors.length)];
+                
+                snake.innerHTML = `<svg viewBox="0 0 ${length} 15" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5 Q ${length/4} 2, ${length/2} 7.5 Q ${3*length/4} 13, ${length-5} 7.5" stroke="${color}" stroke-width="5" fill="transparent"/>
+                    <path d="M${length-5} 7.5 L${length} 7.5 L${length-5} 12 Z" fill="${color}"/>
+                    ${Array.from({length: 5}, (_, i) => 
+                        `<circle cx="${length/5*(i+0.5)}" cy="7.5" r="2" fill="${patternColor}"/>`
+                    ).join('')}
+                </svg>`;
+                
+                jungle.appendChild(snake);
+            }
+            
+            function createButterfly() {
+                const butterfly = document.createElement('div');
+                
+                butterfly.className = 'butterfly';
+                butterfly.style.left = `${Math.random() * 80 + 10}%`;
+                butterfly.style.top = `${Math.random() * 60 + 20}%`;
+                butterfly.style.animation = `flutter ${Math.random() * 2 + 1}s ease-in-out infinite`;
+                
+                // SVG for butterfly
+                const butterflyColors = ['#E91E63', '#9C27B0', '#3F51B5', '#2196F3', '#00BCD4', '#009688'];
+                const color = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
+                
+                butterfly.innerHTML = `<svg viewBox="0 0 30 25" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 5 Q 5 0, 5 12 Q 5 20, 15 15 Z" fill="${color}" stroke="black" stroke-width="0.5"/>
+                    <path d="M15 5 Q 25 0, 25 12 Q 25 20, 15 15 Z" fill="${color}" stroke="black" stroke-width="0.5"/>
+                    <path d="M15 5 L15 15" stroke="black" stroke-width="1"/>
+                    <path d="M12 3 L18 3" stroke="black" stroke-width="0.5"/>
+                </svg>`;
+                
+                jungle.appendChild(butterfly);
+            }
+            
+            function createMonkey() {
+                const monkey = document.createElement('div');
+                
+                monkey.className = 'monkey';
+                monkey.style.left = `${Math.random() * 70 + 15}%`;
+                monkey.style.top = `${Math.random() * 40 + 20}%`;
+                monkey.style.animation = `swing ${Math.random() * 4 + 3}s ease-in-out infinite`;
+                
+                monkey.innerHTML = `<svg viewBox="0 0 40 45" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="20" cy="20" rx="12" ry="10" fill="#795548"/>
+                    <circle cx="20" cy="12" r="8" fill="#8D6E63"/>
+                    <circle cx="16" cy="10" r="1.5" fill="white"/>
+                    <circle cx="24" cy="10" r="1.5" fill="white"/>
+                    <circle cx="16" cy="10" r="0.7" fill="black"/>
+                    <circle cx="24" cy="10" r="0.7" fill="black"/>
+                    <ellipse cx="20" cy="14" rx="3" ry="2" fill="#6D4C41"/>
+                    <path d="M14 6 L8 2" stroke="#8D6E63" stroke-width="1.5"/>
+                    <path d="M26 6 L32 2" stroke="#8D6E63" stroke-width="1.5"/>
+                    <path d="M20 20 L20 35" stroke="#795548" stroke-width="3"/>
+                    <path d="M20 35 L15 40" stroke="#795548" stroke-width="2"/>
+                    <path d="M20 35 L25 40" stroke="#795548" stroke-width="2"/>
+                </svg>`;
+                
+                jungle.appendChild(monkey);
+            }
+            
+        });
     </script>
 </body>
-
 </html>
